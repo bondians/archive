@@ -1,0 +1,12 @@
+#!/bin/sh
+
+OF=transition-$(date +%Y%m%d).db
+
+pg_dump --username=cayuse archive_production > $OF;
+dropdb --username=cayuse archive_development;
+createdb --username=cayuse archive_development;
+psql --username=cayuse archive_development -f $OF;
+cp $OF db.back;
+gzip db.back;
+svn commit -m "db store";
+

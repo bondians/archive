@@ -1,0 +1,28 @@
+<table style= background-color: #777; height: 20px;" border="1" cellpadding="2" cellspacing="1">
+  <tr>
+    <th>Culled</th>
+    <th>File</th>
+    <th>Erased?</th>
+    <td>&nbsp;</td>
+    <th>Reason</th>
+  </tr>
+
+<% @culls.each do |cull| %>
+  <tr>
+    <td><%=h cull.created_at %></td>
+    <td><%=h "\"#{cull.file}\"" %></td>
+    <% if cull.gone %>
+      <td BGCOLOR="#7f0000">YES</td>
+      <td>&nbsp;</td>
+    <% else %>
+      <td BGCOLOR="#007f00">NO</td>
+      <td><%= link_to 'Un-Cull', cull, :method => :delete %></td>
+    <% end %>
+    <td><%=h cull.reason %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<p>
+  Note: Un-Culling doesn not restore the database entry, it simply removes the item from this list. (you might want to note its filepath)
+</p>
